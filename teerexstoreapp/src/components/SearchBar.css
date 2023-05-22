@@ -1,0 +1,22 @@
+div {
+  /* font-family: "Press Start 2P", cursive; */
+}
+.search-bar {
+  /* background-color: #e5e5e5 !important; */
+  border: 1px solid #0a0a0a;
+}
+.search-bar:focus {
+  /* border: 2px solid black !important; */
+}
+
+.searchText {
+  border: 0px solid white !important;
+  border-radius: 0 !important;
+  color: black;
+}
+.searchButton {
+  border-radius: 0 !important;
+  background-color: black !important;
+  /* padding: 1rem 2rem !important; */
+  font-family: "Press Start 2P", cursive !important;
+}
