@@ -6,9 +6,9 @@ import "./SearchBar.css";
 const SearchBar = (props) => {
   const [searchText, SetSearchText] = useState("");
 
-  let searchButton = () => {
-    console.log(searchText);
-  };
+  // let searchButton = (e) => {
+  //   console.log(e.target.value);
+  // };
 
   return (
     <div>
@@ -16,7 +16,7 @@ const SearchBar = (props) => {
         sx={{
           display: "flex",
           alignItems: "flex-end",
-          width: { xs: 350, sm: 370, md: 550, lg: 800, xl: 1000 },
+          width: { xs: 290, sm: 370, md: 550, lg: 800, xl: 1000 },
         }}
         className="search-bar"
       >
@@ -28,12 +28,13 @@ const SearchBar = (props) => {
             fontSize: { xs: 25, sm: 30 },
             fontWeight: "medium",
           }}
+          className="searchIcon"
         >
           🔍
         </Box>
         <TextField
           sx={{
-            width: { xs: 350, sm: 370, md: 550, lg: 800, xl: 1000 },
+            width: { xs: 300, sm: 370, md: 550, lg: 800, xl: 1000 },
             maxWidth: "100%",
             alignSelf: "center",
           }}
@@ -45,7 +46,8 @@ const SearchBar = (props) => {
         />
         <Button
           variant="contained"
-          onClick={() => searchButton()}
+          value={searchText}
+          onClick={props.searchTxt}
           className="searchButton"
           sx={{
             fontSize: { xs: 10, sm: 14, md: 14 },

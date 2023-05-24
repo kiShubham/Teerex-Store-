@@ -20,3 +20,9 @@ div {
   /* padding: 1rem 2rem !important; */
   font-family: "Press Start 2P", cursive !important;
 }
+.searchIcon {
+  transition: transform 0.2s;
+}
+.searchIcon:hover {
+  transform: scale(1.1);
+}

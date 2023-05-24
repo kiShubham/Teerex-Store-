@@ -45,3 +45,21 @@
   border-radius: 5px;
   padding-top: 1rem;
 }
+.filterIcon > img {
+  width: 1.8rem;
+  height: 1.8rem;
+  object-fit: cover;
+  transition: transform 0.2s;
+}
+.filterIcon > img:hover {
+  transform: scale(1.1);
+}
+.filterIcon {
+  display: block !important;
+}
+
+@media screen and (min-width: 768px) {
+  .filterIcon {
+    display: none !important;
+  }
+}

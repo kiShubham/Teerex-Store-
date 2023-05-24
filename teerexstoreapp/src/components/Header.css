@@ -48,6 +48,13 @@
   justify-content: center;
 }
 
+.cartButton > div {
+  transition: transform 0.2s;
+}
+.cartButton > div:hover {
+  transform: scale(1.1);
+}
+
 @media screen and (min-width: 768px) {
   .desktop-View {
     display: block;

@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import SearchBar from "./SearchBar";
 import "./Header.css";
 import { Box } from "@mui/material";
+import { blueGrey } from "@mui/material/colors";
 
 const Header = ({ children }) => {
   return (
@@ -32,7 +33,6 @@ const Header = ({ children }) => {
           className="Action-buttons"
         >
           <Button
-            variant="outlined"
             sx={{
               color: "black",
               borderRadius: 0,
@@ -48,7 +48,7 @@ const Header = ({ children }) => {
             sx={{ fontSize: 26, bgcolor: "grey", borderRadius: 0 }}
             className="cartButton"
           >
-            🛒
+            <div>🛒</div>
           </Button>
         </Box>
       </Box>
