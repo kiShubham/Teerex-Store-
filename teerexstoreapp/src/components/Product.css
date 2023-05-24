@@ -1,0 +1,74 @@
+.items > img {
+  border: 0.5px solid white;
+  object-fit: cover;
+  width: 200px;
+  height: 150px;
+  transition: transform 0.2s;
+  align-self: center;
+  justify-self: center;
+  /* padding: ; */
+}
+.items > img:hover {
+  transform: scale(1.1);
+}
+.items {
+  border: 1px solid #d4d4d4;
+  /* margin: 1.5rem 1rem; */
+  border-radius: 2px;
+}
+
+.action-space > p {
+  font-family: "Poppins";
+  color: #0a0a0a;
+  font-size: larger;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 3px 0 3px 0;
+}
+.action-space > Button {
+  border-radius: 0;
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(171, 102, 255, 1) 0%,
+    rgba(116, 182, 247, 1) 90%
+  );
+  font-family: "Press Start 2p", cursive;
+}
+.productGrid {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  border-radius: 5px;
+  padding-top: 1rem;
+}
+.filterIcon > img {
+  width: 1.8rem;
+  height: 1.8rem;
+  object-fit: cover;
+  transition: transform 0.2s;
+}
+.filterIcon > img:hover {
+  transform: scale(1.1);
+}
+.filterIcon {
+  display: block !important;
+}
+.desktop_view {
+  display: flex !important;
+}
+.mobile_view {
+  display: none !important;
+}
+
+@media screen and (min-width: 768px) {
+  .filterIcon {
+    display: none !important;
+  }
+  .mobile_view {
+    display: flex !important;
+  }
+}

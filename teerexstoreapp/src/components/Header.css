@@ -1,0 +1,65 @@
+.header {
+  display: block;
+  margin-top: 0rem;
+  border-bottom: 1px solid whitesmoke;
+  background: rgb(245, 237, 240);
+  background: radial-gradient(
+    circle,
+    rgba(245, 237, 240, 1) 38%,
+    rgba(177, 174, 238, 1) 61%,
+    rgba(247, 243, 245, 1) 88%,
+    rgba(245, 240, 242, 1) 100%,
+    rgba(238, 242, 246, 1) 100%
+  );
+}
+.colors {
+  width: 100vw;
+  height: 2vh;
+  background: linear-gradient(
+    63deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(133, 57, 175, 1) 27%,
+    rgba(203, 27, 27, 1) 61%,
+    rgba(203, 27, 27, 1) 72%,
+    rgba(252, 176, 69, 1) 100%
+  );
+}
+.BrandName {
+  font-family: "Press Start 2P", cursive;
+  font-size: larger;
+}
+.cartButton {
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(171, 102, 255, 1) 0%,
+    rgba(116, 182, 247, 1) 90%
+  );
+}
+
+.desktop-View {
+  display: none;
+}
+.mobile-View {
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.cartButton > div {
+  transition: transform 0.2s;
+}
+.cartButton > div:hover {
+  transform: scale(1.1);
+}
+
+@media screen and (min-width: 768px) {
+  .desktop-View {
+    display: block;
+  }
+  .mobile-View {
+    display: none;
+  }
+}
