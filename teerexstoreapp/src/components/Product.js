@@ -16,6 +16,7 @@ const Product = () => {
   const [filteredList, setFilteredList] = useState([]);
   const [filterInputs, setFilterInputs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterIcon, setFilterIcon] = useState(false);
 
   const fetchProducts = async () => {
     let res = await axios(
@@ -127,6 +128,10 @@ const Product = () => {
       });
     }
   };
+  const filterIconHandle = () => {
+    if (!filterIcon) setFilterIcon(true);
+    else setFilterIcon(false);
+  };
 
   const newLocal = "filter";
   return (
@@ -140,6 +145,7 @@ const Product = () => {
             borderRadius: 0,
           }}
           className="filterIcon"
+          onClick={filterIconHandle}
         >
           <img src={filterimg} alt="filterlogo" />
         </Button>
@@ -150,6 +156,7 @@ const Product = () => {
           justifyContent: "center",
           mt: 2,
         }}
+        className={filterIcon ? "desktop_view" : "mobile_view"}
       >
         <Box
           className={newLocal}
