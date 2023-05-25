@@ -10,6 +10,7 @@ import SearchBar from "./SearchBar";
 import filterimg from "../filter_emoji.png";
 import { CleaningServicesOutlined } from "@mui/icons-material";
 import { SnackbarProvider, enqueueSnackbar, useSnackbar } from "notistack";
+import Filter from "./Filter";
 
 const Product = () => {
   const [productList, setProductList] = useState([]);
@@ -72,7 +73,7 @@ const Product = () => {
   };
 
   const filterHandler = (e) => {
-    let overSearch = [];
+    let overSearch = []; // for Filter can be applied on top of the search results.
     if (searchTerm.length) {
       const words = searchTerm.split(" ").toReversed().join(" "); //"hoodie blue"->["hoodie" , "blue"]->["blue" , "hoodie"]->"blue hoodie";
 
@@ -95,8 +96,8 @@ const Product = () => {
     } else {
       filterInputs.push(checks);
     }
-    console.log(searchTerm);
-    console.log(searchTerm.length);
+    // console.log(searchTerm);
+    // console.log(searchTerm.length);
     if (filterInputs.length === 0 && !searchTerm.length) {
       setFilteredList(productList);
       return;
@@ -105,17 +106,27 @@ const Product = () => {
     let result = [];
     let tempfilterList = [];
     if (overSearch.length) {
-      tempfilterList = [...overSearch];
+      tempfilterList = [...overSearch]; // filter applied on the top of search result ;
     } else {
-      tempfilterList = [...productList];
+      tempfilterList = [...productList]; // filter applied by itself;
     }
 
-    filterInputs.forEach((f) => {
-      result = tempfilterList.filter((e) => {
-        if (e.color === f) return true;
-        if (e.type === f) return true;
-        if (e.gender === f) return true;
-      });
+    filterInputs.forEach((input) => {
+      if (input === "0 250" || input === "251 450" || input === "451 500") {
+        let range = input.split(" "); // ["0" , "250" ];
+        result = tempfilterList.filter((e) => {
+          let min = range[0] * 1; // converting string into no. // can use parseInt/float also;
+          let max = range[1] * 1;
+          if (min <= e.price && e.price <= max) return true;
+        });
+      } else {
+        result = tempfilterList.filter((e) => {
+          if (e.color === input) return true;
+          if (e.type === input) return true;
+          if (e.gender === input) return true;
+        });
+      }
+
       tempfilterList = [...result]; // from second loop it will search inside the filtered array based on first element;
     });
     // console.log(result);
@@ -133,10 +144,10 @@ const Product = () => {
     else setFilterIcon(false);
   };
 
-  const newLocal = "filter";
+  // const newLocal = "filter";
   return (
     <div>
-      <Header>
+      <Header handleProducts={() => {}}>
         <SearchBar searchTxt={captureSearchTerm} />
         <Button
           sx={{
@@ -150,134 +161,7 @@ const Product = () => {
           <img src={filterimg} alt="filterlogo" />
         </Button>
       </Header>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          mt: 2,
-        }}
-        className={filterIcon ? "desktop_view" : "mobile_view"}
-      >
-        <Box
-          className={newLocal}
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            // border: "1px solid black",
-            justifyContent: "space-evenly",
-            gap: 2,
-            padding: 1,
-            width: "80vw",
-          }}
-        >
-          <Box className="filterItems">
-            <Typography
-              variant="h8"
-              sx={{ fontFamily: "'Press Start 2P',cursive" }}
-            >
-              color
-            </Typography>
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Red"
-                value="Red"
-                onChange={(e) => filterHandler(e)}
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Blue"
-                value="Blue"
-                onChange={(e) => filterHandler(e)}
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Green"
-                value="Green"
-                onChange={(e) => filterHandler(e)}
-              />
-            </FormGroup>
-          </Box>
-          <Box className="filterItems">
-            <Typography
-              variant="h8"
-              sx={{ fontFamily: "'Press Start 2P',cursive" }}
-            >
-              Gender
-            </Typography>
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Men 🤵"
-                value="Men"
-                onChange={(e) => filterHandler(e)}
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Women 💃"
-                value="Women"
-                onChange={(e) => filterHandler(e)}
-              />
-            </FormGroup>
-          </Box>
-          <Box className="filterItems">
-            <Typography
-              variant="h8"
-              sx={{ fontFamily: "'Press Start 2P',cursive" }}
-            >
-              Price
-            </Typography>
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox />}
-                label="0-Rs.250"
-                value="0 250"
-                onChange={(e) => filterHandler(e)}
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Rs.251-450"
-                value="251 450"
-                onChange={(e) => filterHandler(e)}
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Rs.450 🔼"
-                value="451 500"
-                onChange={(e) => filterHandler(e)}
-              />
-            </FormGroup>
-          </Box>
-          <Box className="filterItems">
-            <Typography
-              variant="h8"
-              sx={{ fontFamily: "'Press Start 2P',cursive" }}
-            >
-              Type
-            </Typography>
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Polo "
-                value="Polo"
-                onChange={(e) => filterHandler(e)}
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Hoodie"
-                value="Hoodie"
-                onChange={(e) => filterHandler(e)}
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Basic"
-                value="Basic"
-                onChange={(e) => filterHandler(e)}
-              />
-            </FormGroup>
-          </Box>
-        </Box>
-      </Box>
+      <Filter classNameBoolean={filterIcon} filterHandle={filterHandler} />
       {filteredList.length > 0 ? (
         <div className="productGrid">
           {filteredList.map((e) => {

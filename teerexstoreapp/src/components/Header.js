@@ -5,7 +5,7 @@ import "./Header.css";
 import { Box } from "@mui/material";
 import { blueGrey } from "@mui/material/colors";
 
-const Header = ({ children }) => {
+const Header = ({ children }, props) => {
   return (
     <header className="header">
       <nav className="colors"></nav>
@@ -40,6 +40,7 @@ const Header = ({ children }) => {
               fontFamily: "Poppins",
               fontWeight: "bold",
             }}
+            onClick={props.handleProducts}
           >
             products
           </Button>
