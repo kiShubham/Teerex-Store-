@@ -16,7 +16,7 @@ const Header = ({ children }) => {
   };
   const handleProducts = () => {
     navigate("/");
-    console.log("products clicked");
+    //console.log("products clicked");
   };
   const numProducts = () => {
     let str = localStorage.getItem("cartArray");

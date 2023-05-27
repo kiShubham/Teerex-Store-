@@ -4,25 +4,26 @@ import Header from "./Header";
 import { Box, Typography } from "@mui/material";
 import axios from "axios";
 import { Button } from "@mui/material";
-import background from "../cosmin-hrincu-nimsocstudio-coastalalley.jpg";
-import myGif from "../itami-moti.gif";
-import image1 from "../now.jpg";
+
+import background from "../assests/choi-nara-04.jpg";
+import myGif from "../assests/itami-moti.gif";
+import image1 from "../assests/now.jpg";
 import { enqueueSnackbar } from "notistack";
 import Divider from "@mui/material/Divider";
-import sound1 from "../assests/Bb.mp3";
+import Sorry from "./Sorry";
+// import background from "../cosmin-hrincu-nimsocstudio-coastalalley.jpg";
 
 const Checkout = () => {
   const [productList, setProductList] = useState([]);
   const [cart, setCart] = useState([]);
   const [boolean, setBoolean] = useState(true);
-  const [Qty, updateQty] = useState(0);
-  const [sound, setSound] = useState({ count: 0, bool: true });
+  const [show, setShow] = useState(false);
   const fetchProducts = async () => {
     let res = await axios(
       "https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/catalogue.json"
     );
     if (res && res.data) {
-      setProductList(res.data);
+      // setProductList(res.data);
     }
     return res.data;
   };
@@ -84,8 +85,8 @@ const Checkout = () => {
     if (i === false) {
       object.QTY = currQty - 1;
     }
-    console.log(object); // now as object is modified ,as with new QTY , replace it with existing {same id} object from arr;
-    console.log(object.QTY);
+    // console.log(object); // now as object is modified ,as with new QTY , replace it with existing {same id} object from arr;
+    // console.log(object.QTY);
     // index of id obj;
     let idx = 0;
     for (let i = 0; i < arr.length; i++) {
@@ -96,7 +97,7 @@ const Checkout = () => {
     }
     let tempCart = localStorage.getItem("cartArray");
     let tempDetail = JSON.parse(tempCart);
-    console.log(tempDetail); // [{"ID": 1,"QTY": 3} ,...]
+    // console.log(tempDetail); // [{"ID": 1,"QTY": 3} ,...]
     // updateit
     if (object.QTY > 0) {
       arr.splice(idx, 1, object);
@@ -148,23 +149,7 @@ const Checkout = () => {
     }
     setCart(arr);
   };
-  const handleSound = () => {
-    // setSound({ ...sound, count: sound.count + 1 });//for just updating count value rest remain as it is ;
-    setSound((e) => {
-      // we can either type e or sound ;
-      if (e.bool) return { count: e.count + 1, bool: false };
-      else return { count: e.count + 1, bool: true };
-    });
-
-    if (sound.count > 2) {
-      if (!sound.bool) {
-        new Audio(sound1).play();
-      } // the setSound always took some time to update the value ;which is more than executable time of this code
-      //means in time it set setSound(4);the complier is so fast that it had already executes the code ;so (sound > ) it takes previous value of sound;
-    }
-  };
-  console.log(sound);
-
+  // console.log(show);
   return (
     <div>
       <Header />
@@ -314,7 +299,7 @@ const Checkout = () => {
                   sx={{
                     width: { xs: 300, sm: 586, md: 616, lg: 310 },
                     padding: { xs: 2.5, sm: 1, md: 1, lg: 1, xl: 1 },
-                    height: 325,
+                    height: { xs: 363, sm: 335 },
                     borderRadius: 2.5,
                   }}
                   className="sumContainer"
@@ -350,17 +335,18 @@ const Checkout = () => {
                       <p>Promotion:</p>
                       <p>- ₹80.00</p>
                     </div>
-                    <Divider />
+                    <Divider sx={{ mb: 0.5 }} />
                     <div
                       style={{
                         color: "gold",
                         fontSize: "15px",
+                        backgroundColor: "rgba(0,0,0,0.45)",
                       }}
                     >
                       <p>Order Total:</p>
                       <p>₹{totalAmount - 40}</p>
                     </div>
-                    <Divider />
+                    <Divider sx={{ mt: 0.5 }} />
                     <Button
                       sx={{
                         color: "white",
@@ -377,9 +363,9 @@ const Checkout = () => {
                         "&:hover": { bgcolor: "black" },
                       }}
                       variant="contained"
-                      onClick={handleSound}
+                      onClick={() => setShow(true)}
                     >
-                      {sound.count > 2 ? <>paisa Laya</> : <>place order</>}
+                      place order
                     </Button>
                   </Box>
                 </Box>
@@ -456,6 +442,9 @@ const Checkout = () => {
               </Typography>
             </Box>
           )}
+        </Box>
+        <Box className={show ? "sorryShow" : "sorryHide"}>
+          <Sorry cancelBTN={() => setShow(false)} />
         </Box>
       </Box>
     </div>
