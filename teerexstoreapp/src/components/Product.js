@@ -1,23 +1,24 @@
 import { Box, Button, Typography } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import axios from "axios";
-import React, { useEffect, useState, useSyncExternalStore } from "react";
+import React, { useEffect, useState } from "react";
 import "./Product.css";
 import Header from "./Header";
 import SearchBar from "./SearchBar";
 import filterimg from "../filter_emoji.png";
-import { CleaningServicesOutlined } from "@mui/icons-material";
-import { SnackbarProvider, enqueueSnackbar, useSnackbar } from "notistack";
+import { enqueueSnackbar } from "notistack";
 import Filter from "./Filter";
+import { useNavigate } from "react-router-dom";
+import background from "../naragif.gif";
+import background2 from "../nara-b.jpg";
 
 const Product = () => {
+  const navigate = useNavigate();
   const [productList, setProductList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [filterInputs, setFilterInputs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterIcon, setFilterIcon] = useState(false);
+  const [cart, setCart] = useState([]);
 
   const fetchProducts = async () => {
     let res = await axios(
@@ -36,8 +37,8 @@ const Product = () => {
       setFilteredList(productData);
     };
     onLoadHandler();
-
-    console.log("run");
+    if (!localStorage.getItem("cartArray"))
+      localStorage.setItem("cartArray", "[]"); //arr in string format ;
   }, []);
 
   let captureSearchTerm = (e) => {
@@ -115,7 +116,7 @@ const Product = () => {
       if (input === "0 250" || input === "251 450" || input === "451 500") {
         let range = input.split(" "); // ["0" , "250" ];
         result = tempfilterList.filter((e) => {
-          let min = range[0] * 1; // converting string into no. // can use parseInt/float also;
+          let min = range[0] * 1; // converting string into no. // can also use parseInt/float also;
           let max = range[1] * 1;
           if (min <= e.price && e.price <= max) return true;
         });
@@ -144,14 +145,97 @@ const Product = () => {
     else setFilterIcon(false);
   };
 
-  // const newLocal = "filter";
+  // let arr = [];
+
+  const handleAddToCart = (item) => {
+    let arr = [...cart]; // copying the cart array into arr for easy operations ;
+    console.log(arr);
+    if (item.quantity === 0) {
+      enqueueSnackbar("sorry! product is out of stock", {
+        variant: "warning",
+      });
+      return;
+    }
+    let obj = { ID: item.id, QTY: 1 };
+    let availableQuantity = item.quantity;
+    // if (!arr.includes(obj)) {
+    //   arr.push(obj);
+    // }
+
+    if (!arr.length) {
+      // console.log("first Element");
+      arr.push(obj);
+    } else {
+      let found = false;
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].ID === obj.ID) {
+          found = true;
+          if (arr[i].QTY < availableQuantity) {
+            arr[i].QTY = arr[i].QTY + 1;
+          } else {
+            enqueueSnackbar("Maximum limit reached,for particular product", {
+              variant: "warning",
+            });
+          }
+          break;
+        }
+      }
+      if (found === false) {
+        arr.push(obj);
+      }
+      if (found === true) {
+        // console.log("Item already exists");
+      }
+    }
+
+    let existstroage = localStorage.getItem("cartArray");
+    let existArr = JSON.parse(existstroage);
+    // compare 'existArr' & 'arr' and in temp will contain element that is not common in both arrays ;
+    // console.log("existArr");
+    // console.log(existArr);
+    // console.log("arr");
+    // console.log(arr);
+
+    let temp = [];
+    for (let i = 0; i < existArr.length; i++) {
+      let found = false;
+      for (let j = 0; j < arr.length; j++) {
+        if (existArr[i].ID === arr[j].ID) {
+          found = true;
+        }
+      }
+      if (found === false) {
+        if (!temp.includes(existArr[i])) temp.push(existArr[i]);
+      }
+    }
+    console.log(temp); //working ;
+    temp.forEach((e) => arr.push(e));
+    console.log(arr);
+    // console.log(arr);[{ID: 1, QTY: 3},....]
+    let string = JSON.stringify(arr); // saving the array of object in string format in local Storage ;
+
+    //start
+    if (temp.length > 0) {
+      // //[{"ID":4,"QTY":1}] modify existing
+      // let temp1 = existstroage.slice(1, existstroage.length - 1);
+      // let temp2 = string.slice(1, string.length - 1);
+      // let newString = `[${temp1},${temp2}]`;
+      // localStorage.cartArray = newString;
+      localStorage.setItem("cartArray", string);
+    } else {
+      localStorage.setItem("cartArray", string);
+    }
+
+    setCart(arr);
+  };
+
   return (
-    <div>
-      <Header handleProducts={() => {}}>
+    <div style={{ marginBottom: "50px" }}>
+      <Header>
         <SearchBar searchTxt={captureSearchTerm} />
         <Button
           sx={{
-            ml: 1,
+            padding: 0,
             border: "1px solid black",
             borderRadius: 0,
           }}
@@ -161,72 +245,83 @@ const Product = () => {
           <img src={filterimg} alt="filterlogo" />
         </Button>
       </Header>
-      <Filter classNameBoolean={filterIcon} filterHandle={filterHandler} />
-      {filteredList.length > 0 ? (
-        <div className="productGrid">
-          {filteredList.map((e) => {
-            return (
-              <div key={e.id}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    p: 1,
-                  }}
-                  className="items"
-                >
-                  <img src={e.imageURL} alt={e.name} />
-                  <Typography
-                    sx={{
-                      fontFamily: "'Bungee Shade', cursive",
-                      alignSelf: "center",
-                      fontSize: 22,
-                      fontWeight: "bold",
-                      mt: 1,
-                    }}
-                  >
-                    {e.name}
-                  </Typography>
+      <Box
+        sx={{
+          border: "1px solid rgba(0,0,0,0)",
+          backgroundImage: `url(${background2})`,
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+          backgroundRepeat: "no-repeat",
+          backgroundPositionY: "center",
+          minHeight: "100vh",
+        }}
+      >
+        <Filter classNameBoolean={filterIcon} filterHandle={filterHandler} />
+        {filteredList.length > 0 ? (
+          <div className="productGrid">
+            {filteredList.map((item) => {
+              return (
+                <div key={item.id}>
                   <Box
                     sx={{
                       display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      padding: "0 5px",
-                      gap: 2,
+                      flexDirection: "column",
+                      p: 1,
                     }}
-                    className="action-space"
+                    className="items"
                   >
-                    <p>Rs.{e.price}</p>
-                    <Button
-                      variant="contained"
-                      onClick={() =>
-                        enqueueSnackbar("That was easy!", {
-                          variant: "success",
-                        })
-                      }
+                    <img src={item.imageURL} alt={item.name} />
+                    <Typography
+                      sx={{
+                        fontFamily: "'Bungee Shade', cursive",
+                        alignSelf: "center",
+                        fontSize: 22,
+                        fontWeight: "bold",
+                        mt: 1,
+                      }}
                     >
-                      Add to cart
-                    </Button>
+                      {item.name}
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "0 5px",
+                        gap: 2,
+                      }}
+                      className="action-space"
+                    >
+                      <p>Rs.{item.price}</p>
+                      <Button
+                        variant="contained"
+                        onClick={() => handleAddToCart(item)}
+                        className={
+                          !item.quantity ? "notAvailable" : "available"
+                        }
+                      >
+                        {!item.quantity ? <>out of stock</> : <>Add to cart</>}
+                      </Button>
+                    </Box>
                   </Box>
-                </Box>
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        <Typography
-          variant="h3"
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            mt: 5,
-          }}
-        >
-          sorry no Products found
-        </Typography>
-      )}
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <Typography
+            variant="h3"
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              mt: 5,
+            }}
+          >
+            sorry ! no Products found
+          </Typography>
+        )}
+      </Box>
     </div>
   );
 };

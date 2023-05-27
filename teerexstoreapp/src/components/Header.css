@@ -1,4 +1,7 @@
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
   display: block;
   margin-top: 0rem;
   border-bottom: 1px solid whitesmoke;
@@ -25,8 +28,13 @@
   );
 }
 .BrandName {
-  font-family: "Press Start 2P", cursive;
-  font-size: larger;
+  font-family: "Press Start 2P", cursive !important;
+  font-size: larger !important;
+  cursor: pointer !important;
+  transition: transform 0.2s !important;
+}
+.BrandName:hover {
+  transform: scale(1.1) !important;
 }
 .cartButton {
   background-image: radial-gradient(
@@ -35,7 +43,6 @@
     rgba(116, 182, 247, 1) 90%
   );
 }
-
 .desktop-View {
   display: none;
 }
@@ -52,7 +59,7 @@
   transition: transform 0.2s;
 }
 .cartButton > div:hover {
-  transform: scale(1.1);
+  transform: scale(1.4);
 }
 
 @media screen and (min-width: 768px) {
@@ -62,4 +69,29 @@
   .mobile-View {
     display: none;
   }
+}
+
+.cartParent {
+  position: relative;
+  display: inline-block !important;
+}
+.badge {
+  position: absolute;
+  top: -26px;
+  padding: 1px 3px;
+  right: -5px;
+  font-family: "Nabla", cursive;
+  font-size: 40px;
+  backdrop-filter: blur(1.5px);
+  border-radius: 5px;
+}
+.highBadge {
+  position: absolute;
+  top: -26px;
+  padding: 1px 3px;
+  right: -20px;
+  font-family: "Nabla", cursive;
+  font-size: 40px;
+  backdrop-filter: blur(1.5px);
+  border-radius: 5px;
 }

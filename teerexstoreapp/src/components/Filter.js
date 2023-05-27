@@ -13,7 +13,8 @@ const Filter = (props) => {
         sx={{
           display: "flex",
           justifyContent: "center",
-          mt: 2,
+          mt: 3,
+          mb: 3,
         }}
         className={props.classNameBoolean ? "desktop_view" : "mobile_view"}
       >
@@ -25,7 +26,7 @@ const Filter = (props) => {
             // border: "1px solid black",
             justifyContent: "space-evenly",
             gap: 2,
-            padding: 1,
+            padding: "8px 0px",
             width: "80vw",
           }}
         >

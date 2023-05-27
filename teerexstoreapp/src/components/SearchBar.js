@@ -16,7 +16,8 @@ const SearchBar = (props) => {
         sx={{
           display: "flex",
           alignItems: "flex-end",
-          width: { xs: 290, sm: 370, md: 550, lg: 800, xl: 1000 },
+          width: { xs: 290, sm: 370, md: 550, lg: 700, xl: "70vw" },
+          // width: "70vw",
         }}
         className="search-bar"
       >
@@ -34,7 +35,7 @@ const SearchBar = (props) => {
         </Box>
         <TextField
           sx={{
-            width: { xs: 300, sm: 370, md: 550, lg: 800, xl: 1000 },
+            width: { xs: 300, sm: 370, md: 550, lg: 698, xl: "70vw" },
             maxWidth: "100%",
             alignSelf: "center",
           }}
