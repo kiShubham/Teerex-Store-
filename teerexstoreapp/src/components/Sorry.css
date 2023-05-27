@@ -1,0 +1,51 @@
+.sorryContainer {
+  height: 100px;
+  /* background-color: grey; */
+  position: absolute;
+  /* top: 200px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sorryPage {
+  border: 2.5px solid yellowgreen;
+  background-color: rgba(245, 245, 244, 0.1);
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+  z-index: 5 !important;
+}
+.sorryPage > img {
+  height: 80%;
+  width: 100%;
+  object-fit: cover;
+  background-attachment: fixed;
+  /* background-position-y: center; */
+  border-radius: 10px 10px 0 0;
+}
+.sorryFooter {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.sorryText {
+  font-family: "press start 2p" !important;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: yellowgreen;
+}
+
+@media screen and (max-width: 600px) {
+  .sorryFooter {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sorryPage > img {
+    height: 70%;
+  }
+  .sorryText {
+    text-align: center;
+  }
+}

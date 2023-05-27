@@ -51,6 +51,12 @@
   display: flex;
   justify-content: space-between;
 }
+.sorryShow {
+  display: block;
+}
+.sorryHide {
+  display: none;
+}
 @media screen and (max-width: 599px) {
   .singleItem > img {
     width: 196.66px;
@@ -67,15 +73,15 @@
 @media (min-width: 1132px) and (max-width: 1199px) {
   .sumContainer {
     width: 310px !important;
-    height: 316px !important;
+    height: 335px !important;
   }
 }
 @media screen and (min-width: 1516px) {
   .sumContainer {
     position: absolute;
     right: 10vw;
-    top: 30vh;
+    top: 24vh;
     width: 350px !important;
-    height: 356px !important;
+    height: 335px !important;
   }
 }

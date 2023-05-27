@@ -4,12 +4,11 @@ import React, { useEffect, useState } from "react";
 import "./Product.css";
 import Header from "./Header";
 import SearchBar from "./SearchBar";
-import filterimg from "../filter_emoji.png";
+import filterimg from "../assests/filter_emoji.png";
 import { enqueueSnackbar } from "notistack";
 import Filter from "./Filter";
 import { useNavigate } from "react-router-dom";
-import background from "../naragif.gif";
-import background2 from "../nara-b.jpg";
+import background2 from "../assests/nara-b.jpg";
 
 const Product = () => {
   const navigate = useNavigate();
@@ -149,7 +148,7 @@ const Product = () => {
 
   const handleAddToCart = (item) => {
     let arr = [...cart]; // copying the cart array into arr for easy operations ;
-    console.log(arr);
+    // console.log(arr);
     if (item.quantity === 0) {
       enqueueSnackbar("sorry! product is out of stock", {
         variant: "warning",
@@ -208,9 +207,9 @@ const Product = () => {
         if (!temp.includes(existArr[i])) temp.push(existArr[i]);
       }
     }
-    console.log(temp); //working ;
+    // console.log(temp); //working ;
     temp.forEach((e) => arr.push(e));
-    console.log(arr);
+    // console.log(arr);
     // console.log(arr);[{ID: 1, QTY: 3},....]
     let string = JSON.stringify(arr); // saving the array of object in string format in local Storage ;
 
