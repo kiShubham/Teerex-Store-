@@ -1,5 +1,7 @@
 .items > img {
-  border: 0.5px solid white;
+  margin-top: 15px;
+  /* border: 0.5px solid white; */
+  border-radius: 7px;
   object-fit: cover;
   width: 200px;
   height: 150px;
@@ -12,9 +14,12 @@
   transform: scale(1.1);
 }
 .items {
-  border: 1px solid #d4d4d4;
-  /* margin: 1.5rem 1rem; */
-  border-radius: 2px;
+  /* border: 1px solid #d4d4d4; */
+
+  border-radius: 10px;
+  background-color: rgba(245, 245, 244, 0.1);
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(2.5px);
 }
 
 .action-space > p {
@@ -25,14 +30,20 @@
   border-bottom: 1px solid black;
   padding: 3px 0 3px 0;
 }
-.action-space > Button {
-  border-radius: 0;
+
+.available {
+  border-radius: 0 !important;
   background-image: radial-gradient(
     circle farthest-corner at 10% 20%,
     rgba(171, 102, 255, 1) 0%,
     rgba(116, 182, 247, 1) 90%
   );
-  font-family: "Press Start 2p", cursive;
+  font-family: "Press Start 2p", cursive !important;
+}
+.notAvailable {
+  font-family: "Press Start 2p", cursive !important;
+  background-color: grey !important;
+  border-radius: 0 !important;
 }
 .productGrid {
   display: flex;
@@ -46,13 +57,14 @@
   padding-top: 1rem;
 }
 .filterIcon > img {
-  width: 1.8rem;
-  height: 1.8rem;
+  padding-top: 5px;
+  width: 2rem;
+  height: 2rem;
   object-fit: cover;
   transition: transform 0.2s;
 }
 .filterIcon > img:hover {
-  transform: scale(1.1);
+  transform: scale(1.3);
 }
 .filterIcon {
   display: block !important;

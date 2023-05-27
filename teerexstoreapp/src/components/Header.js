@@ -2,10 +2,41 @@ import React from "react";
 import Button from "@mui/material/Button";
 import SearchBar from "./SearchBar";
 import "./Header.css";
-import { Box } from "@mui/material";
-import { blueGrey } from "@mui/material/colors";
+import { Box, Typography } from "@mui/material";
+// import { Link } from "react-router-dom"; using useNavigate;
+import { useNavigate } from "react-router-dom";
+import { ConnectingAirportsOutlined } from "@mui/icons-material";
 
-const Header = ({ children }, props) => {
+const Header = ({ children }) => {
+  const navigate = useNavigate();
+
+  const handleCartButton = () => {
+    // console.log("cartButton Clicked");
+    navigate("/checkout");
+  };
+  const handleProducts = () => {
+    navigate("/");
+    console.log("products clicked");
+  };
+  const numProducts = () => {
+    let str = localStorage.getItem("cartArray");
+    let total = 0;
+    if (str) {
+      let arr = JSON.parse(str);
+      // console.log(arr);
+
+      arr.forEach((e) => {
+        total = total + e.QTY;
+      });
+    }
+    return total;
+  };
+  let count;
+  if (numProducts()) {
+    // only show when item added to cart  ;
+    count = numProducts();
+  }
+
   return (
     <header className="header">
       <nav className="colors"></nav>
@@ -19,7 +50,9 @@ const Header = ({ children }, props) => {
         }}
         className="sub-header"
       >
-        <p className="BrandName">Teerex store</p>
+        <Typography className="BrandName" onClick={handleProducts}>
+          Teerex store
+        </Typography>
         <div className="desktop-View">
           {/* <SearchBar /> */}
           {children}
@@ -39,18 +72,23 @@ const Header = ({ children }, props) => {
               border: "1px solid black",
               fontFamily: "Poppins",
               fontWeight: "bold",
+              letterSpacing: 1,
             }}
-            onClick={props.handleProducts}
+            onClick={handleProducts}
           >
             products
           </Button>
-          <Button
-            variant="contained"
-            sx={{ fontSize: 26, bgcolor: "grey", borderRadius: 0 }}
-            className="cartButton"
-          >
-            <div>🛒</div>
-          </Button>
+          <Box className="cartParent">
+            <Button
+              variant="contained"
+              sx={{ fontSize: 26, borderRadius: 0 }}
+              className="cartButton"
+              onClick={handleCartButton}
+            >
+              <div style={{ zIndex: 2 }}>🛒</div>
+            </Button>
+            <span className={count > 9 ? "highBadge" : "badge"}>{count}</span>
+          </Box>
         </Box>
       </Box>
       <Box className="mobile-View">
